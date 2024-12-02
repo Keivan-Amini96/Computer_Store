@@ -13,6 +13,19 @@ body {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     width: 300px;
 }
+.roleSelection {
+    margin-bottom: 20px;
+    display: flex; /* Align radio buttons horizontally */
+    justify-content: space-evenly; /* Distribute items evenly */
+    align-items: center; /* Vertically center the items */
+}
+
+/* Label for each role radio button */
+.roleLabel {
+    display: flex;
+    align-items: center;
+}
+
 h2 {
     text-align: center;
 }

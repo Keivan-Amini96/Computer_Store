@@ -24,8 +24,8 @@ db.connect((err) => {
     console.log('Server Started');
 });
 app.post('/login', (req, res) => {
-    const { username, password } = req.body;
-    db.execute('SELECT pd FROM users WHERE un = ?', [username], (err, results) => {
+    const { username, password, is_admin} = req.body;
+    db.execute('SELECT pd FROM users WHERE un = ? and is_admin = ?', [username, is_admin], (err, results) => {
         if (err) return res.status(500).json({ message: 'Database error' });
 
         if (results.length === 0) {
@@ -39,6 +39,38 @@ app.post('/login', (req, res) => {
         } else {
             return res.status(401).json({ message: 'Invalid username or password' });
         }
+    });
+});
+app.get('/api/pc', (req, res) => {
+    const sql = 'SELECT product_id, name, description, price, category, brand, ram, ssd, graphics, processor, image_data  FROM pc';
+    db.query(sql, (err, results) => {
+        if (err) {
+            console.error('Error fetching pc:', err.stack);
+            return res.status(500).send('Internal Server Error');
+        }
+        res.json(results);
+    });
+});
+
+app.get('/api/monitors', (req, res) => {
+    const sql = 'SELECT product_id, name, description, price, category, brand, size, resolution, refresh_rate, image_data  FROM monitors';
+    db.query(sql, (err, results) => {
+        if (err) {
+            console.error('Error fetching monitors:', err.stack);
+            return res.status(500).send('Internal Server Error');
+        }
+        res.json(results);
+    });
+});
+
+app.get('/api/accessories', (req, res) => {
+    const sql = 'SELECT product_id, name, description, price, category, brand, image_data  FROM monitors';
+    db.query(sql, (err, results) => {
+        if (err) {
+            console.error('Error fetching accessories:', err.stack);
+            return res.status(500).send('Internal Server Error');
+        }
+        res.json(results);
     });
 });
 
