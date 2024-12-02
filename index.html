@@ -4,19 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Online Store</title>
-    <link rel="stylesheet" href="./Styles/homePage.css">
+    <link rel="stylesheet" href="Styles/homePage.css">
 </head>
 <body>
     <header>
         <div class="header-container">
             <div class="store-logo">
-                <img src="images/store-icon.png" alt="Store Icon">
                 <h1>My Online Store</h1>
             </div>
             <nav class="navbar">
                 <ul class="nav-links">
-                    <li><a href="./index.html">Home</a></li>
-                    <li><a href="./productList.html">Products</a></li>
+                    <li><a href="Index.html">Home</a></li>
+                    <li><a href="productList.html">Products</a></li>
                 </ul>
                 <form class="search-bar">
                     <input type="text" placeholder="Search for products...">
@@ -34,45 +33,52 @@
             </nav>
         </div>
     </header>
+
+    <!-- Main Content -->
     <main>
+        <!-- Banner Section -->
         <section class="banner">
             <h2>Welcome to the Best Online Computer Store</h2>
             <p>Browse the latest desktops, laptops, and accessories.</p>
         </section>
+
+        <!-- Categories Section -->
         <section class="categories">
             <h3>Shop by Category</h3>
             <div class="category-grid">
                 <div class="category" data-category="Desktops">
-                    <img src="images/desktop.png" alt="Desktops">
+                    <img src="images/Desktops.png" alt="Desktops">
                     <h4>Desktops</h4>
                 </div>
                 <div class="category" data-category="Laptops">
-                    <img src="images/laptop.png" alt="Laptops">
+                    <img src="images/Laptops1.jpg" alt="Laptops">
                     <h4>Laptops</h4>
                 </div>
                 <div class="category" data-category="Monitors">
-                    <img src="images/monitor.png" alt="Monitors">
+                    <img src="images/monitor-removebg-preview.png" alt="Monitors">
                     <h4>Monitors</h4>
                 </div>
                 <div class="category" data-category="Accessories">
-                    <img src="images/accessories.png" alt="Accessories">
+                    <img src="images/Accessories-removebg-preview.png" alt="Accessories">
                     <h4>Accessories</h4>
                 </div>
             </div>
         </section>
     </main>
-
     <aside id="cart-sidebar">
         <div class="cart-header">
-            <h2>Your Cart</h2>
-            <button id="close-cart">X</button>
+          <h2>Your Cart</h2>
+          <button id="close-cart">X</button>
         </div>
         <div id="cart-items"></div>
         <p>Total: $<span id="cart-total">0.00</span></p>
-    </aside>
+        <div class="cart-actions">
+          <button id="checkout-btn" onclick="checkout()">Checkout</button>
+        </div>
+      </aside>      
+      <div id="notification-container"></div>
     <footer>
         <p>&copy; 2024 Online Computer Store. All rights reserved.</p>
     </footer>
-
     <script src="app.js"></script>
 </body>
