@@ -1,58 +1,38 @@
-
-** {
+* {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;  /* Ensures padding and border don't affect width */
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
 }
-
-/* Apply base styling to the body */
 body {
     background: #f5f5f5;
     color: #2d545e;
     font-family: Arial, sans-serif;
     line-height: 1.6;
-    min-width: 100vw;  /* Ensure body takes full viewport width */
 }
-/* Header Styling */
 header {
-    width: 100%;  /* Ensure the header spans the full width of the viewport */
-    background-color: #333;
-    color: white;
-    padding: 20px;
-    position: relative;
-    min-height: 100px;  /* Ensures there's a minimum height */
-    box-sizing: border-box;  /* Include padding and borders in the width/height */
-    overflow: visible;  /* Allow content to overflow if needed */
+    background-color: #12343b;
+    color: #f0ebe1;
+    padding: 20px 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
-
-/* Flexbox container for the header */
 .header-container {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    width: 100%;
-    box-sizing: border-box;  /* Ensure no overflow due to padding or margin */
+    justify-content: space-between;
+    flex-wrap: wrap;
 }
-
 .store-logo {
     display: flex;
     align-items: center;
     flex: 1;
     min-width: 150px;
 }
-
-.store-logo img {
-    width: 40px;
-    height: 40px;
-    margin-right: 10px;
-}
-
 .store-logo h1 {
     font-size: 1.5rem;
+    padding-right: 10px;
     color: #d4a373;
 }
-
-
 .navbar {
     display: flex;
     align-items: center;
@@ -67,7 +47,6 @@ header {
     display: flex;
     gap: 20px;
 }
-
 .nav-links li a {
     color: #f0ebe1;
     text-decoration: none;
@@ -78,8 +57,6 @@ header {
 .nav-links li a:hover {
     color: #d4a373;
 }
-
-
 .search-bar {
     flex: 2;
     display: flex;
@@ -87,7 +64,6 @@ header {
     align-items: center;
     min-width: 200px;
 }
-
 .search-bar input {
     width: 70%;
     padding: 5px 10px;
@@ -112,10 +88,10 @@ header {
     background-color: #a47551;
     color: #f0ebe1;
 }
-
 #cart-toggle {
     background-color: #12343b;
     border: none;
+    padding: 10px;
     border-radius: 10px;
     cursor: pointer;
     display: flex;
@@ -126,8 +102,6 @@ header {
     height: 70px;
     position: relative;
 }
-
-
 #cart-toggle svg {
     width: 50px;
     height: 50px;
@@ -137,7 +111,6 @@ header {
 #cart-toggle:hover svg {
     fill: #e1b382;
 }
-
 #cart-count {
     position: absolute;
     top: 5px;
@@ -151,7 +124,6 @@ header {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     z-index: 2;
 }
-
 #cart-sidebar {
     position: fixed;
     top: 0;
@@ -164,9 +136,11 @@ header {
     transition: right 0.3s ease;
     z-index: 1000;
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     overflow-y: auto;
 }
-
 .cart-header {
     display: flex;
     justify-content: space-between;
@@ -179,8 +153,14 @@ header {
     color: white;
     border: none;
     cursor: pointer;
-    padding: 5px 10px;
+    padding: 10px 15px;
     border-radius: 5px;
+    font-size: 1.2rem;
+    transition: background-color 0.3s;
+}
+
+#close-cart:hover {
+    background-color: #a47551;
 }
 .cart-item {
     margin-bottom: 15px;
@@ -192,32 +172,101 @@ header {
     justify-content: space-between;
     align-items: center;
 }
+.cart-item > p {
+    margin: 0;
+    font-size: 14px;
+    flex: 1;
+    text-align: center;
+}
+.cart-actions {
+    margin-top: 20px;
+    text-align: center;
+}
 
+#checkout-btn {
+    width: 100%;
+    padding: 10px 20px;
+    background-color: #d4a373;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
 
+#checkout-btn:hover {
+    background-color: #a47551;
+    transform: scale(1.05);
+}
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.quantity-controls button {
+    width: 30px;
+    height: 30px;
+    background-color: #c89666;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease;
+}
+.quantity-controls button:hover {
+    background-color: #a6754d;
+}
+button.remove-item {
+    background-color: #ff6b6b;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button.remove-item:hover {
+    background-color: #e65555;
+}
+.cart-actions button {
+    background-color: #c89666;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.cart-actions button:hover {
+    background-color: #a6754d;
+}
 .nav-actions {
     display: flex;
     align-items: center;
     justify-content: flex-end;
     gap: 15px;
 }
-
-
 .nav-actions li {
     list-style: none;
 }
-
 .nav-actions li a {
     color: #f0ebe1;
     text-decoration: none;
     font-size: 1rem;
     transition: color 0.3s;
 }
-
 .nav-actions li a:hover {
     color: #d4a373;
 }
-
-
 .banner {
     text-align: center;
     background: linear-gradient(to bottom, #2d545e, #12343b);
@@ -236,12 +285,9 @@ header {
     font-size: 1.3rem;
     font-weight: 300;
 }
-
-
 .categories {
     margin: 30px 20px;
     text-align: center;
-    cursor: pointer;
 }
 
 .categories h3 {
@@ -264,6 +310,7 @@ header {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     text-align: center;
     transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
 }
 
 .category:hover {
@@ -274,15 +321,22 @@ header {
 }
 
 .category img {
-    width: 80px;
+    width: 220px;
+    height: 150px;
+    object-fit: cover;
     margin-bottom: 10px;
+    background-color: transparent;
+    border-radius: 5px;
 }
-
-.category h4 {
-    font-size: 1.3rem;
-    color: #2d545e;
+.category-grid .category a {
+    text-decoration: none;
+    color: inherit;
 }
-
+.category-grid .category a h4 {
+    text-decoration: none;
+    margin: 0;
+    color: inherit;
+}
 footer {
     background: #12343b;
     color: #f0ebe1;
@@ -290,13 +344,64 @@ footer {
     padding: 20px;
     margin-top: 40px;
 }
+#notification-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.notification {
+    background-color: #12343b;
+    color: #f0ebe1;
+    padding: 15px 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    animation: fade-in 0.5s ease, fade-out 0.5s ease 3s;
+    font-size: 1rem;
+    font-weight: bold;
+}
+.notification .close-btn {
+    background: none;
+    border: none;
+    color: #d4a373;
+    font-size: 1.2rem;
+    font-weight: bold;
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    cursor: pointer;
+}
+.notification .close-btn:hover {
+    color: #a47551;
+}
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
-
+@keyframes fade-out {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+}
 @media (max-width: 768px) {
     .header-container {
         flex-direction: column;
         align-items: flex-start;
-        width: 100%;  /* Ensure full width */
     }
 
     .navbar {
@@ -306,7 +411,7 @@ footer {
     }
 
     .search-bar {
-        width: 100%;  /* Ensure search bar takes full width */
+        width: 100%;
         justify-content: space-between;
     }
 
@@ -333,7 +438,7 @@ footer {
     }
 
     .category-grid {
-        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));  /* Small items */
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     }
 
     .category h4 {
