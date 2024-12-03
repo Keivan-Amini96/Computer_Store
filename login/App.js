@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomePage from './HomePage';
 import LoginPage from './Login';
 function App() {
-    const [username, setUsername] = useState(localStorage.getItem('username'));
+    const [username, setUsername] = useState(null);
 
     // Update username when login page is accessed
     React.useEffect(() => {

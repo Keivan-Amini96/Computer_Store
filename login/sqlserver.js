@@ -6,8 +6,15 @@ const cors = require('cors');
 const app = express();
 const port = 5000;
 
+const corsOptions = {
+    origin: 'http://ec2-3-83-116-22.compute-1.amazonaws.com/:5000/login',  // your React app's URL (replace if different)
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'], // Add any custom headers you're sending
+    credentials: true,  // Allow cookies (if you're sending them)
+};
+
 app.use(express.json());
-app.use(cors());
+app.use(cors(corsOptions));
 
 const db = mysql.createConnection({
     host: 'database-1.ciwlsxmyu0ev.us-east-1.rds.amazonaws.com',

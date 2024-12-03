@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './css/homePage.css'; // Assuming you still have global styles like your original CSS file
 import { Link } from 'react-router-dom';
 
-const HomePage = () => {
+const HomePage = ({user}) => {
     const [cartCount, setCartCount] = useState(0);
     const [isCartOpen, setIsCartOpen] = useState(false);
 
@@ -28,7 +28,8 @@ const HomePage = () => {
                             <button type="submit">Search</button>
                         </form>
                         <ul className="nav-actions">
-                            <li><Link to="/login">Login</Link></li>
+                            {user ? (<li><Link to="/login">{user}</Link></li>)
+                                : (<li><Link to="/login">login</Link></li>)}
                             <li>
                                 <button id="cart-toggle" onClick={handleCartToggle}>
                                     <svg width="256px" height="256px" viewBox="0 0 24.00 24.00" fill="none" xmlns="http://www.w3.org/2000/svg" transform="rotate(-45)" stroke="white" strokeWidth="0.00024">
@@ -47,10 +48,10 @@ const HomePage = () => {
                 </div>
             </header>
             <main>
-                <section className="banner">
-                    <h2>Welcome to the Best Online Computer Store</h2>
-                    <p>Browse the latest desktops, laptops, and accessories.</p>
-                </section>
+                {/*<section className="banner">*/}
+                {/*    <h2>Welcome to the Best Online Computer Store</h2>*/}
+                {/*    <p>Browse the latest desktops, laptops, and accessories.</p>*/}
+                {/*</section>*/}
                 <section className="categories">
                     <h3>Shop by Category</h3>
                     <div className="category-grid">
