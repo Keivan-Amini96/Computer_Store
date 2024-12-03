@@ -66,7 +66,26 @@ header {
 .nav-links li a:hover {
     color: #d4a373; 
 }
+.nav-actions {
+    display: flex;
+    align-items: center; 
+    justify-content: flex-end; 
+    gap: 15px; 
+}
 
+.nav-actions li {
+    list-style: none;
+}
+.nav-actions li a {
+    color: #f0ebe1; 
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s;
+}
+
+.nav-actions li a:hover {
+    color: #d4a373;
+}
 
 .search-bar {
     flex: 2;
@@ -185,6 +204,12 @@ header {
     justify-content: space-between;
     align-items: center;
 }
+.cart-item > p {
+    margin: 0;
+    font-size: 14px;
+    flex: 1;
+    text-align: center;
+}
 .cart-actions {
     margin-top: 20px;
     text-align: center;
@@ -207,27 +232,56 @@ header {
     background-color: #a47551;
     transform: scale(1.05);
 }
-.nav-actions {
+.quantity-controls {
     display: flex;
-    align-items: center; 
-    justify-content: flex-end; 
-    gap: 15px; 
+    align-items: center;
+    gap: 5px;
+}
+.quantity-controls button {
+    width: 30px;
+    height: 30px;
+    background-color: #c89666;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease;
 }
 
-.nav-actions li {
-    list-style: none;
+.quantity-controls button:hover {
+    background-color: #a6754d;
 }
-.nav-actions li a {
-    color: #f0ebe1; 
-    text-decoration: none;
-    font-size: 1rem;
-    transition: color 0.3s;
+button.remove-item {
+    background-color: #ff6b6b;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-.nav-actions li a:hover {
-    color: #d4a373;
+button.remove-item:hover {
+    background-color: #e65555;
+}
+.cart-actions button {
+    background-color: #c89666;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
+.cart-actions button:hover {
+    background-color: #a6754d;
+}
 .main-content {
     display: flex;
     padding: 20px;

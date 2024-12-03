@@ -172,6 +172,12 @@ header {
     justify-content: space-between;
     align-items: center;
 }
+.cart-item > p {
+    margin: 0;
+    font-size: 14px;
+    flex: 1;
+    text-align: center;
+}
 .cart-actions {
     margin-top: 20px;
     text-align: center;
@@ -193,6 +199,56 @@ header {
 #checkout-btn:hover {
     background-color: #a47551;
     transform: scale(1.05);
+}
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.quantity-controls button {
+    width: 30px;
+    height: 30px;
+    background-color: #c89666;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease;
+}
+
+.quantity-controls button:hover {
+    background-color: #a6754d;
+}
+button.remove-item {
+    background-color: #ff6b6b;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button.remove-item:hover {
+    background-color: #e65555;
+}
+.cart-actions button {
+    background-color: #c89666;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.cart-actions button:hover {
+    background-color: #a6754d;
 }
 .nav-actions {
     display: flex;
@@ -273,9 +329,14 @@ header {
     background-color: transparent;
     border-radius: 5px;
 }
-.category h4 {
-    font-size: 1.3rem;
-    color: #2d545e;
+.category-grid .category a {
+    text-decoration: none;
+    color: inherit;
+}
+.category-grid .category a h4 {
+    text-decoration: none;
+    margin: 0;
+    color: inherit;
 }
 footer {
     background: #12343b;
