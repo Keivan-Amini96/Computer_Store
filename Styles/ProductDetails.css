@@ -379,7 +379,6 @@ button.remove-item:hover {
     font-size: 1rem;
     transition: background-color 0.3s;
 }
-
 .add-to-cart:hover {
     background-color: #a47551;
 }

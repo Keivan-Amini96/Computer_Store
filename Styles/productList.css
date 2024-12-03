@@ -477,7 +477,6 @@ footer {
         transform: translateY(0);
     }
 }
-
 @keyframes fade-out {
     from {
         opacity: 1;
