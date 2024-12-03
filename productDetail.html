@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Listing</title>
-    <link rel="stylesheet" href="./Styles/productList.css">
+    <title>Product Details</title>
+    <link rel="stylesheet" href="./Styles/productDetails.css">
 </head>
 <body>
     <div class="wrapper">
@@ -35,48 +35,23 @@
             </div>
         </header>
         <main class="main-content">
-            <aside class="filters">
-                <h2>Filter Products</h2>
-                <div class="filter-options">
-                    <label for="categories">Category:</label>
-                    <select id="categories">
-                        <option value="all">All</option>
-                        <option value="desktops">Desktops</option>
-                        <option value="laptops">Laptops</option>
-                        <option value="monitors">Monitors</option>
-                        <option value="accessories">Accessories</option>
-                    </select>
-
-                    <label for="brands">Brand:</label>
-                    <select id="brands">
-                        <option value="all">All</option>
-                        <option value="Apple">Apple</option>
-                        <option value="Asus">Asus</option>
-                        <option value="Dell">Dell</option>
-                    </select>
-
-                    <label for="price-range">Price Range:</label>
-                    <input type="range" id="price-range" min="0" max="2000" step="100">
-                    <span id="price-range-value">$0 - $2000</span>
-                </div>
-            </aside>
-            <section class="product-grid">
-                <div class="products-header">
-                    <h2>Products</h2>
-                    <div class="sort-by">
-                        <label for="sort">Sort by:</label>
-                        <select id="sort">
-                            <option value="popularity">Popularity</option>
-                            <option value="price-low-high">Price: Low to High</option>
-                            <option value="price-high-low">Price: High to Low</option>
-                        </select>
+            <section class="product-details">
+                <div class="product-gallery">
+                    <div class="gallery-main">
+                        <img id="main-image" src="" alt="Main Product Image">
                     </div>
+                    <div class="gallery-thumbnails"></div>
                 </div>
-                <div class="products" id="product-list"></div>
+                <div class="product-info">
+                    <h1>Product Name</h1>
+                    <p class="price">$0</p>
+                    <p class="availability">Availability: <span>Unknown</span></p>
+                    <p class="description">Product description will be dynamically displayed here.</p>
+                    <button class="add-to-cart" data-id="">Add to Cart</button>
+                </div>
             </section>
         </main>
     </div>
-
     <aside id="cart-sidebar">
         <div class="cart-header">
           <h2>Your Cart</h2>
@@ -92,6 +67,7 @@
     <footer>
         <p>&copy; 2024 Online Computer Store. All rights reserved.</p>
     </footer>
-    <script src="app.js"></script>
+
+    <script src="./app.js"></script>
 </body>
 </html>

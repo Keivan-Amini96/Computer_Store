@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <link rel="stylesheet" href="./Styles/checkout.css">
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+            <div class="header-container">
+                <div class="store-logo">
+                    <h1>My Online Store</h1>
+                </div>
+                <nav class="navbar">
+                    <ul class="nav-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="productList.html">Products</a></li>
+                    </ul>
+                    <ul class="nav-actions">
+                        <li><a href="https://en.wikipedia.org/wiki/Google">Login</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <main class="main-content">
+            <h2>Checkout</h2>
+            <div class="checkout-container">
+                <div class="order-summary">
+                    <h3>Order Summary</h3>
+                    <p>Laptop A<br>Price: $1000</p>
+                    <p>Monitor B<br>Price: $200</p>
+                    <div class="total">Total: $1200.00</div>
+                </div>
+                <form class="checkout-form">
+                    <h3>Billing Details</h3>
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" placeholder="Enter your full name">
+
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" placeholder="Enter your email address">
+
+                    <label for="address">Address:</label>
+                    <textarea id="address" placeholder="Enter your address"></textarea>
+
+                    <label for="payment">Payment Method:</label>
+                    <select id="payment">
+                        <option value="credit-card">Credit Card</option>
+                        <option value="paypal">PayPal</option>
+                        <option value="bank-transfer">Bank Transfer</option>
+                    </select>
+                    <button type="submit">Place Order</button>
+                </form>
+            </div>
+        </main>
+    </div>
+    <footer>
+        <p>&copy; 2024 Online Computer Store. All rights reserved.</p>
+    </footer>
+    <div id="order-confirmation-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>Order Confirmed!</h2>
+            <p>Thank you for your purchase! Your order has been placed successfully.</p>
+            <button id="close-modal">Return to the Homepage</button>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
