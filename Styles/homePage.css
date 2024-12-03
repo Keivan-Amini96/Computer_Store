@@ -37,17 +37,11 @@ header {
     min-width: 150px;
 }
 
-.store-logo img {
-    width: 40px;
-    height: 40px;
-    margin-right: 10px;
-}
-
 .store-logo h1 {
     font-size: 1.5rem;
+    padding-right: 10px;
     color: #d4a373; 
 }
-
 
 .navbar {
     display: flex;
@@ -239,7 +233,9 @@ header {
     text-align: center;
     cursor: pointer;
 }
-
+.categories a{
+    text-decoration: none;
+}
 .categories h3 {
     font-size: 2rem;
     margin-bottom: 20px;

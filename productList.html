@@ -11,13 +11,13 @@
         <header>
             <div class="header-container">
                 <div class="store-logo">
-                    <img src="images/store-icon.png" alt="Store Icon">
+                   
                     <h1>My Online Store</h1>
                 </div>
                 <nav class="navbar">
                     <ul class="nav-links">
-                        <li><a href="Index.html">Home</a></li>
-                        <li><a href="./productList.html">Products</a></li>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="productList.html">Products</a></li>
                     </ul>
                     <form class="search-bar">
                         <input type="text" placeholder="Search for products...">
@@ -52,9 +52,9 @@
                     <label for="brands">Brand:</label>
                     <select id="brands">
                         <option value="all">All</option>
-                        <option value="brand1">Brand 1</option>
-                        <option value="brand2">Brand 2</option>
-                        <option value="brand3">Brand 3</option>
+                        <option value="Apple">Apple</option>
+                        <option value="Asus">Asus</option>
+                        <option value="Dell">Dell</option>
                     </select>
 
                     <label for="price-range">Price Range:</label>
@@ -75,40 +75,16 @@
                         </select>
                     </div>
                 </div>
-                <div class="products">
-                    <div class="product-card">
-                        <img src="images/product1.png" alt="Product 1">
-                        <h3>Desktop Computer</h3>
-                        <p>$500</p>
-                        <button>Add to Cart</button>
-                    </div>
-                    <div class="product-card">
-                        <img src="images/product2.png" alt="Product 2">
-                        <h3>Laptop</h3>
-                        <p>$700</p>
-                        <button>Add to Cart</button>
-                    </div>
-                    <div class="product-card">
-                        <img src="images/product3.png" alt="Product 3">
-                        <h3>Monitor</h3>
-                        <p>$300</p>
-                        <button>Add to Cart</button>
-                    </div>
-                </div>
+                <div class="products" id="product-list"></div>
             </section>
         </main>
     </div>
+
     <footer>
         <p>&copy; 2024 Online Computer Store. All rights reserved.</p>
     </footer>
 
-    <script>
-        const priceRange = document.getElementById('price-range');
-        const priceValue = document.getElementById('price-value');
-
-        priceRange.addEventListener('input', () => {
-            priceValue.textContent = `$0 - $${priceRange.value}`;
-        });
-    </script>
+    <script src="./app.js"></script>
+    <script src="./productDetail.js"></script>
 </body>
 </html>
