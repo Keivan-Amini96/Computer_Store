@@ -1,19 +1,20 @@
 import React, {useState} from 'react';
 import axios from 'axios';
 import './css/login.css';
+import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const Login = ({ onLogin }) => {
     const [is_admin, setIsAdmin] = useState(null);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
-
+    const navigate = useNavigate();
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
             // post
-            const response = await axios.post('http://ec2-user@ec2-3-87-9-58.compute-1.amazonaws.com:5000/login', {
+            const response = await axios.post('http://ec2-user@ec2-3-83-116-22.compute-1.amazonaws.com:5000/login', {
                 username,
                 password,
                 is_admin
@@ -22,7 +23,8 @@ const Login = () => {
             // if is a customer
             // if is an admin
             localStorage.setItem('authToken', response.data.token);
-            alert('Login Successful');
+            onLogin(username);
+            navigate('/');
         } catch (error) {
             setErrorMessage(error.response ? error.response.data.message : 'Something went wrong');
         }
