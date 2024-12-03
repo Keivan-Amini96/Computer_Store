@@ -1,11 +1,23 @@
-import React from 'react';
-import Login from './sqlserver';
-
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import HomePage from './HomePage';
+import LoginPage from './Login';
 function App() {
+    const [username, setUsername] = useState(localStorage.getItem('username'));
+
+    // Update username when login page is accessed
+    React.useEffect(() => {
+        const storedUsername = localStorage.getItem('username');
+        setUsername(storedUsername);
+    }, []);
+
     return (
-        <div className="App">
-            <Login />
-        </div>
+        <Router>
+            <Routes>
+                <Route path="/" element={<HomePage username={username} />} />
+                <Route path="/login" element={<LoginPage />} />
+            </Routes>
+        </Router>
     );
 }
 
