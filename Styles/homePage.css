@@ -219,7 +219,6 @@ header {
     align-items: center;
     transition: background-color 0.3s ease;
 }
-
 .quantity-controls button:hover {
     background-color: #a6754d;
 }
