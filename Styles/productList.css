@@ -24,28 +24,23 @@ header {
     padding: 10px 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
-
 .header-container {
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
 }
-
-
 .store-logo {
     display: flex;
     align-items: center;
     flex: 1;
     min-width: 150px;
 }
-
 .store-logo h1 {
     font-size: 1.5rem;
+    padding-right: 10px;
     color: #d4a373; 
 }
-
-
 .navbar {
     display: flex;
     align-items: center;
@@ -119,8 +114,6 @@ header {
     height: 70px; 
     position: relative; 
 }
-
-
 #cart-toggle svg {
     width: 50px;
     height: 50px; 
@@ -172,9 +165,16 @@ header {
     color: white;
     border: none;
     cursor: pointer;
-    padding: 5px 10px;
+    padding: 10px 15px;
     border-radius: 5px;
+    font-size: 1.2rem;
+    transition: background-color 0.3s;
 }
+
+#close-cart:hover {
+    background-color: #a47551;
+}
+
 .cart-item {
     margin-bottom: 15px;
     padding: 10px;
@@ -185,8 +185,28 @@ header {
     justify-content: space-between;
     align-items: center;
 }
+.cart-actions {
+    margin-top: 20px;
+    text-align: center;
+}
 
+#checkout-btn {
+    width: 100%;
+    padding: 10px 20px;
+    background-color: #d4a373;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
 
+#checkout-btn:hover {
+    background-color: #a47551;
+    transform: scale(1.05);
+}
 .nav-actions {
     display: flex;
     align-items: center; 
@@ -194,11 +214,9 @@ header {
     gap: 15px; 
 }
 
-
 .nav-actions li {
     list-style: none;
 }
-
 .nav-actions li a {
     color: #f0ebe1; 
     text-decoration: none;
@@ -294,12 +312,12 @@ header {
     gap: 20px;
     align-items: start;
     justify-content: center;
-    grid-auto-rows: 1fr; /* Ensure consistent row height */
+    grid-auto-rows: 1fr;
 }
 
 .product-card {
     background: #ffffff; 
-    border: 1px solid #c89666;  
+    border: 1px solid #c89666;
     border-radius: 10px; 
     padding: 20px; 
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
@@ -361,6 +379,61 @@ footer {
     margin-top: auto; 
 }
 
+#notification-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.notification {
+    background-color: #12343b;
+    color: #f0ebe1;
+    padding: 15px 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    animation: fade-in 0.5s ease, fade-out 0.5s ease 3s;
+    font-size: 1rem;
+    font-weight: bold;
+}
+.notification .close-btn {
+    background: none;
+    border: none;
+    color: #d4a373;
+    font-size: 1.2rem;
+    font-weight: bold;
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    cursor: pointer;
+}
+
+.notification .close-btn:hover {
+    color: #a47551;
+}
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fade-out {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+}
 @media (max-width: 768px) {
     .main-content {
         flex-direction: column; 

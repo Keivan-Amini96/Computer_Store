@@ -11,7 +11,6 @@
         <header>
             <div class="header-container">
                 <div class="store-logo">
-                   
                     <h1>My Online Store</h1>
                 </div>
                 <nav class="navbar">
@@ -35,7 +34,6 @@
                 </nav>
             </div>
         </header>
-
         <main class="main-content">
             <aside class="filters">
                 <h2>Filter Products</h2>
@@ -80,11 +78,21 @@
         </main>
     </div>
 
+    <aside id="cart-sidebar">
+        <div class="cart-header">
+          <h2>Your Cart</h2>
+          <button id="close-cart">X</button>
+        </div>
+        <div id="cart-items"></div>
+        <p>Total: $<span id="cart-total">0.00</span></p>
+        <div class="cart-actions">
+          <button id="checkout-btn" onclick="checkout()">Checkout</button>
+        </div>
+      </aside>      
+      <div id="notification-container"></div>
     <footer>
         <p>&copy; 2024 Online Computer Store. All rights reserved.</p>
     </footer>
-
-    <script src="./app.js"></script>
-    <script src="./productDetail.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
