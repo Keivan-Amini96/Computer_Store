@@ -14,7 +14,7 @@ const Login = ({ onLogin }) => {
 
         try {
             // post
-            const response = await axios.post('http://ec2-user@ec2-3-83-116-22.compute-1.amazonaws.com:5000/login', {
+            const response = await axios.post('http://ec2-user@ec2-44-201-203-201.compute-1.amazonaws.com:5000/login', {
                 username,
                 password,
                 is_admin
