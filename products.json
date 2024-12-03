@@ -6,7 +6,7 @@
         "image": "./Images/Laptops/MacbookPro.jpg",
         "description": "This desktop computer features the latest technology, offering high performance and reliability for both work and entertainment.",
         "availability": "In Stock",
-        "category": "laptops",
+        "category": "desktops",
         "brand": "Apple",
         "popularity": 80,
         "gallery": [
@@ -22,7 +22,7 @@
         "image": "./Images/Laptops/AsusZephyrus.jpg",
         "description": "A lightweight and powerful laptop designed for work and entertainment.",
         "availability": "In Stock",
-        "category": "desktops",
+        "category": "laptops",
         "brand": "Asus",
         "popularity": 80,
         "gallery": [
