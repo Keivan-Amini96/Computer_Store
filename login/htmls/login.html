@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="../css/login1.css">
+    <link rel="stylesheet" href="../css/login.css">
 </head>
 <body>
 
@@ -45,7 +45,7 @@
         }
 
         // Send the login credentials to the backend using fetch
-        fetch('http://ec2-34-207-161-171.compute-1.amazonaws.com:5000/login', {
+        fetch('http://ec2-3-86-24-216.compute-1.amazonaws.com:5000/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -60,7 +60,7 @@
                 if (response.ok) {
                     // Handle successful login (e.g., redirect the user)
                     alert('Login successful!');
-                    window.location.href = "dashboard.html"; // Example redirect to dashboard
+                    window.location.href = "homePage.html"; // Example redirect to dashboard
                 } else {
                     return response.text().then(errorMessage => {
                         // Handle login failure (invalid credentials, etc.)
