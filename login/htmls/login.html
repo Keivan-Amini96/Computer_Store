@@ -60,6 +60,8 @@
                 if (response.ok) {
                     // Handle successful login (e.g., redirect the user)
                     alert('Login successful!');
+                    localStorage.setItem('username', username);
+                    console.log(" adrian " + username);
                     window.location.href = "homePage.html"; // Example redirect to dashboard
                 } else {
                     return response.text().then(errorMessage => {

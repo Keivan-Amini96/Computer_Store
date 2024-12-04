@@ -8,6 +8,20 @@ const searchBar = document.querySelector(".search-bar input");
 const searchButton = document.querySelector(".search-bar button");
 const categoryGrid = document.querySelector(".category-grid");
 const mainContent = document.querySelector("main");
+const sqlurl = "http://ec2-3-86-24-216.compute-1.amazonaws.com:5000";
+
+// set login
+window.onload = function (){
+    const globalValue = localStorage.getItem('username');
+
+    if (globalValue) {
+        document.getElementById('homepagelogin').textContent = globalValue;
+    } else {
+        console.log(" adrian111 " + globalValue);
+        document.getElementById('homepagelogin').textContent = 'Login';
+    }
+};
+
 
 //Toggle the cart sidebar
 cartToggle?.addEventListener("click", () => {
@@ -29,7 +43,9 @@ closeCart?.addEventListener("click", () => {
 });
 
 //Fetch products from JSON
-fetch('./products.json')
+
+//
+fetch(sqlurl+"/api/productlist")
     .then(response => response.json())
     .then(data => {
         products = data;
@@ -59,17 +75,17 @@ function loadCartFromLocalStorage() {
 
 function renderCart() {
     const cartItemsContainer = document.getElementById("cart-items");
-    const cartTotal = document.getElementById("cart-total");
     const cartCount = document.getElementById("cart-count");
 
-    if (!cartItemsContainer || !cartTotal || !cartCount) {
+    if (!cartItemsContainer || !cartCount) {
         console.error("Cart elements not found.");
         return;
     }
 
     cartItemsContainer.innerHTML = "";
-    let total = 0;
-//Crat Buttons
+    let subtotal = 0;
+
+    //Render each item in the cart dynamically
     cart.forEach((item, index) => {
         const cartItem = document.createElement("div");
         cartItem.classList.add("cart-item");
@@ -85,11 +101,27 @@ function renderCart() {
             <button class="remove-item" data-index="${index}">Remove</button>
         `;
         cartItemsContainer.appendChild(cartItem);
-        total += item.price * item.quantity;
+        subtotal += item.price * item.quantity;
     });
 
-    cartTotal.textContent = total.toFixed(2); //Update the total
-    cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0); //Update item count
+    // Calculate shipping and tax dynamically
+    const shippingCost = subtotal > 0 ? 10 : 0;
+    const taxCost = subtotal * 0.13;
+    const finalTotal = subtotal + shippingCost + taxCost;
+
+    // Dynamically append shipping, tax, and total
+    const shippingElement = document.createElement("div");
+    shippingElement.classList.add("cart-summary");
+    shippingElement.innerHTML = `
+        <p>Subtotal: $${subtotal.toFixed(2)}</p>
+        <p>Shipping: $${shippingCost.toFixed(2)}</p>
+        <p>Tax: $${taxCost.toFixed(2)}</p>
+        <strong>Total: $${finalTotal.toFixed(2)}</strong>
+    `;
+    cartItemsContainer.appendChild(shippingElement);
+
+    // Update cart count
+    cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0); // Total items
 
     //Event listeners for quantity controls and remove buttons
     const decreaseButtons = document.querySelectorAll(".decrease-quantity");
@@ -108,8 +140,8 @@ function renderCart() {
         button.addEventListener("click", () => removeFromCart(button.dataset.index))
     );
 
-    //Save cart for the whole webpages
-    localStorage.setItem('cart', JSON.stringify(cart));
+    // Save the updated cart in localStorage
+    localStorage.setItem("cart", JSON.stringify(cart));
 }
 
 //Add to cart
@@ -339,21 +371,59 @@ function showNotification(message, type = "info") {
         notification.remove();
     });
 }
-document.querySelector(".checkout-form button[type='submit']").addEventListener("click", (e) => {
-    e.preventDefault();
-    const name = document.getElementById("name").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const address = document.getElementById("address").value.trim();
-    const payment = document.getElementById("payment").value;
-    const orderModal = document.getElementById("order-confirmation-modal");
-    if (orderModal) {
-        orderModal.classList.remove("hidden");
+document.addEventListener("DOMContentLoaded", () => {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-        //Clear cart
-        cart = [];
-        localStorage.setItem("cart", JSON.stringify(cart));
-        renderCart(); //Update the cart
+    if (cart.length > 0) {
+        const orderSummaryContainer = document.querySelector(".order-summary");
+        let subtotal = 0;
+
+        const cartItemsHTML = cart
+            .map((item) => {
+                subtotal += item.price * item.quantity;
+                return `
+                    <p>${item.name}<br>Price: $${item.price} x ${item.quantity}</p>
+                `;
+            })
+            .join("");
+
+        const shippingCost = subtotal > 0 ? 10 : 0;
+        const taxCost = subtotal * 0.13;
+        const finalTotal = subtotal + shippingCost + taxCost;
+
+        const totalHTML = `
+            <div class="total">
+                Subtotal: $${subtotal.toFixed(2)}<br>
+                Shipping: $${shippingCost.toFixed(2)}<br>
+                Tax: $${taxCost.toFixed(2)}<br>
+                <strong>Total: $${finalTotal.toFixed(2)}</strong>
+            </div>
+        `;
+
+        orderSummaryContainer.innerHTML = `
+            <h3>Order Summary</h3>
+            ${cartItemsHTML}
+            ${totalHTML}
+        `;
+    } else {
+        const orderSummaryContainer = document.querySelector(".order-summary");
+        orderSummaryContainer.innerHTML = `
+            <h3>Order Summary</h3>
+            <p>Your cart is empty. Please add items to your cart before proceeding to checkout.</p>
+        `;
     }
+
+    // Event listener for the Close button in the modal
+    document.getElementById("close-modal").addEventListener("click", () => {
+        const orderModal = document.getElementById("order-confirmation-modal");
+        if (orderModal) {
+            orderModal.classList.add("hidden"); // Hide the modal
+        }
+
+        // Clear cart and redirect to homepage
+        localStorage.removeItem("cart");
+        window.location.href = "index.html";
+    });
 });
 
 //Event listener to the Close the order confirmation

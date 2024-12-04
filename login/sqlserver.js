@@ -39,20 +39,20 @@ app.post('/login', (req, res) => {
             const token = jwt.sign({ id: user.id, username: user.username }, 'secret_key', { expiresIn: '1h' });
             const jsonData = JSON.stringify("", null, 2);
 
-            const jsonFilePath = path.join(__dirname, './json/user.json');
-            const data = JSON.stringify({
-                name: username
-            }, null, 2);
-
-            // Write the JSON data to a file in the public directory
-            fs.writeFile(jsonFilePath, data, (err) => {
-                if (err) {
-                    res.status(500).send('Error writing to JSON file');
-                    return;
-                }
-
-                res.status(200).send('JSON file written successfully!');
-            });
+            // const jsonFilePath = path.join(__dirname, './json/user.json');
+            // const data = JSON.stringify({
+            //     name: username
+            // }, null, 2);
+            //
+            // // Write the JSON data to a file in the public directory
+            // fs.writeFile(jsonFilePath, data, (err) => {
+            //     if (err) {
+            //         res.status(500).send('Error writing to JSON file');
+            //         return;
+            //     }
+            //
+            //     res.status(200).send('JSON file written successfully!');
+            // });
 
             res.json({ message: 'Login successful', token });
         } else {
@@ -84,6 +84,17 @@ app.get('/api/monitors', (req, res) => {
 
 app.get('/api/accessories', (req, res) => {
     const sql = 'SELECT product_id, name, description, price, category, brand, image_data  FROM monitors';
+    db.query(sql, (err, results) => {
+        if (err) {
+            console.error('Error fetching accessories:', err.stack);
+            return res.status(500).send('Internal Server Error');
+        }
+        res.json(results);
+    });
+});
+
+app.get('/api/productlist', (req, res) => {
+    const sql = "select price, name from pc union select price, name from monitors union select price, name from accessories";
     db.query(sql, (err, results) => {
         if (err) {
             console.error('Error fetching accessories:', err.stack);
