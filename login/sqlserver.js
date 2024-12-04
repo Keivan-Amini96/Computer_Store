@@ -104,6 +104,32 @@ app.get('/api/productlist', (req, res) => {
     });
 });
 
+app.post('/signup', async (req, res) => {
+    const { username, password } = req.body;
+
+    if (!username || !password) {
+        return res.status(400).json({ error: 'Username and password are required' });
+    }
+
+    try {
+        // Hash the password before storing it
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Insert the new user into the database
+        const query = 'INSERT INTO users (un, pd, is_admin) VALUES (?, ?, ?)';
+        db.query(query, [username, hashedPassword, 0], (err, result) => {
+            if (err) {
+                console.error('Database query error:', err);
+                return res.status(500).json({ error: 'Database error' });
+            }
+            res.status(200).json({ message: 'User created successfully!' });
+        });
+    } catch (err) {
+        console.error('Error:', err);
+        res.status(500).json({ error: 'Error hashing password' });
+    }
+});
+
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });

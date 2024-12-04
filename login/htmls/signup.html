@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signup Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f4f4f4;
+    }
+    .signup-container {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 300px;
+    }
+    h2 {
+      text-align: center;
+    }
+    label {
+      display: block;
+      margin: 10px 0 5px;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: cornflowerblue;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: cornflowerblue;
+    }
+    .error {
+      color: red;
+      font-size: 14px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<div class="signup-container">
+  <h2>Create Account</h2>
+  <form id="signup-form">
+    <label for="username">Username</label>
+    <input type="text" id="username" name="username" required />
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" required />
+    <button type="submit">Sign Up</button>
+  </form>
+  <div class="error" id="error-message"></div>
+</div>
+
+<script>
+  // Handle form submission
+  document.getElementById('signup-form').addEventListener('submit', async function(event) {
+    event.preventDefault();
+
+    // Get values from the form
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    // Validation (Optional)
+    if (username === '' || password === '') {
+      document.getElementById('error-message').innerText = 'Username and Password are required.';
+      return;
+    }
+
+    try {
+      // Make a POST request to the server
+      const response = await fetch('http://ec2-3-86-24-216.compute-1.amazonaws.com:5000/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        alert('Signup successful!');
+        window.location.href = "homePage.html"; ;  // Redirect to login page
+      } else {
+        document.getElementById('error-message').innerText = result.error || 'Signup failed!';
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      document.getElementById('error-message').innerText = 'There was an error with the signup.';
+    }
+  });
+</script>
+
+</body>
+</html>

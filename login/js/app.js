@@ -422,15 +422,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Clear cart and redirect to homepage
         localStorage.removeItem("cart");
-        window.location.href = "index.html";
+        window.location.href = "/htmls/homePage.html";
     });
-});
-
-//Event listener to the Close the order confirmation
-document.getElementById("close-modal").addEventListener("click", () => {
-    const orderModal = document.getElementById("order-confirmation-modal");
-    if (orderModal) {
-        orderModal.classList.add("hidden");
-        window.location.href = "index.html";
-    }
 });
