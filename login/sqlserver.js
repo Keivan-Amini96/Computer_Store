@@ -94,7 +94,7 @@ app.get('/api/accessories', (req, res) => {
 });
 
 app.get('/api/productlist', (req, res) => {
-    const sql = "select price, name from pc union select price, name from monitors union select price, name from accessories";
+    const sql = "select price, name, product_id, category, brand from pc union select price, name, product_id, category, brand from monitors union select price, name, product_id, category, brand from accessories";
     db.query(sql, (err, results) => {
         if (err) {
             console.error('Error fetching accessories:', err.stack);
@@ -102,32 +102,6 @@ app.get('/api/productlist', (req, res) => {
         }
         res.json(results);
     });
-});
-
-app.post('/signup', async (req, res) => {
-    const { username, password } = req.body;
-
-    if (!username || !password) {
-        return res.status(400).json({ error: 'Username and password are required' });
-    }
-
-    try {
-        // Hash the password before storing it
-        const hashedPassword = await bcrypt.hash(password, 10);
-
-        // Insert the new user into the database
-        const query = 'INSERT INTO users (un, pd, is_admin) VALUES (?, ?, ?)';
-        db.query(query, [username, hashedPassword, 0], (err, result) => {
-            if (err) {
-                console.error('Database query error:', err);
-                return res.status(500).json({ error: 'Database error' });
-            }
-            res.status(200).json({ message: 'User created successfully!' });
-        });
-    } catch (err) {
-        console.error('Error:', err);
-        res.status(500).json({ error: 'Error hashing password' });
-    }
 });
 
 app.listen(port, () => {
