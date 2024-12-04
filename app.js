@@ -55,21 +55,19 @@ function loadCartFromLocalStorage() {
         cart = JSON.parse(storedCart);
         renderCart();
     }
-}
-
-function renderCart() {
+}function renderCart() {
     const cartItemsContainer = document.getElementById("cart-items");
-    const cartTotal = document.getElementById("cart-total");
     const cartCount = document.getElementById("cart-count");
 
-    if (!cartItemsContainer || !cartTotal || !cartCount) {
-        console.error("Cart elements not found.");
+    if (!cartItemsContainer) {
+        console.error("Cart items container not found.");
         return;
     }
 
-    cartItemsContainer.innerHTML = "";
-    let total = 0;
-//Crat Buttons
+    cartItemsContainer.innerHTML = ""; // Clear existing cart items
+    let subtotal = 0;
+
+    // Render each item in the cart dynamically
     cart.forEach((item, index) => {
         const cartItem = document.createElement("div");
         cartItem.classList.add("cart-item");
@@ -85,31 +83,46 @@ function renderCart() {
             <button class="remove-item" data-index="${index}">Remove</button>
         `;
         cartItemsContainer.appendChild(cartItem);
-        total += item.price * item.quantity;
+        subtotal += item.price * item.quantity;
     });
 
-    cartTotal.textContent = total.toFixed(2); //Update the total
-    cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0); //Update item count
+    // Calculate shipping and tax dynamically
+    const shippingCost = subtotal > 0 ? 10 : 0; // Example: $10 shipping if subtotal > $0
+    const taxCost = subtotal * 0.13; // Example: 13% tax
+    const finalTotal = subtotal + shippingCost + taxCost;
 
-    //Event listeners for quantity controls and remove buttons
-    const decreaseButtons = document.querySelectorAll(".decrease-quantity");
-    const increaseButtons = document.querySelectorAll(".increase-quantity");
-    const removeButtons = document.querySelectorAll(".remove-item");
+    // Remove old summary if it exists
+    const existingSummary = document.querySelector(".cart-summary");
+    if (existingSummary) existingSummary.remove();
 
-    decreaseButtons.forEach(button =>
-        button.addEventListener("click", () => adjustQuantity(button.dataset.index, -1))
-    );
+    // Dynamically append shipping, tax, and total
+    const shippingElement = document.createElement("div");
+    shippingElement.classList.add("cart-summary");
+    shippingElement.innerHTML = `
+        <p>Subtotal: $${subtotal.toFixed(2)}</p>
+        <p>Shipping: $${shippingCost.toFixed(2)}</p>
+        <p>Tax: $${taxCost.toFixed(2)}</p>
+        <strong>Total: $${finalTotal.toFixed(2)}</strong>
+    `;
+    cartItemsContainer.appendChild(shippingElement);
 
-    increaseButtons.forEach(button =>
-        button.addEventListener("click", () => adjustQuantity(button.dataset.index, 1))
-    );
+    // Update cart count
+    if (cartCount) {
+        cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0); // Total items
+    }
 
-    removeButtons.forEach(button =>
-        button.addEventListener("click", () => removeFromCart(button.dataset.index))
-    );
+    // Bind event listeners using delegation
+    cartItemsContainer.addEventListener("click", (event) => {
+        if (event.target.classList.contains("decrease-quantity")) {
+            adjustQuantity(event.target.dataset.index, -1);
+        } else if (event.target.classList.contains("increase-quantity")) {
+            adjustQuantity(event.target.dataset.index, 1);
+        } else if (event.target.classList.contains("remove-item")) {
+            removeFromCart(event.target.dataset.index);
+        }
+    });
 
-    //Save cart for the whole webpages
-    localStorage.setItem('cart', JSON.stringify(cart));
+    localStorage.setItem("cart", JSON.stringify(cart));
 }
 
 //Add to cart
@@ -154,9 +167,18 @@ function checkout() {
         showNotification("Your cart is empty. Add some items before checking out.", "error");
         return;
     }
+
+    const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const shippingCost = subtotal > 0 ? 10 : 0;
+    const taxCost = subtotal * 0.13;
+    const finalTotal = subtotal + shippingCost + taxCost;
+
+    localStorage.setItem("checkoutData", JSON.stringify({ subtotal, shippingCost, taxCost, finalTotal }));
+
     showNotification("Redirecting to checkout page...", "success");
     window.location.href = "checkout.html";
 }
+
 
 //----------Product Listing Functions
 
@@ -217,7 +239,6 @@ function filterProducts() {
 
     renderProducts(filteredProducts);
 }
-
 
 //Eventlisteners for filters
 const categoryDropdown = document.getElementById("categories");
@@ -308,8 +329,62 @@ function renderProductDetails(product) {
         addToCartButton.onclick = () => addToCart(product.id);
     }
 }
+document.addEventListener("DOMContentLoaded", () => {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-// ------------------Notifications
+    if (cart.length > 0) {
+        const orderSummaryContainer = document.querySelector(".order-summary");
+        let subtotal = 0;
+
+        const cartItemsHTML = cart
+            .map((item) => {
+                subtotal += item.price * item.quantity;
+                return `
+                    <p>${item.name}<br>Price: $${item.price} x ${item.quantity}</p>
+                `;
+            })
+            .join("");
+
+        const shippingCost = subtotal > 0 ? 10 : 0;
+        const taxCost = subtotal * 0.13;
+        const finalTotal = subtotal + shippingCost + taxCost;
+
+        const totalHTML = `
+            <div class="total">
+                Subtotal: $${subtotal.toFixed(2)}<br>
+                Shipping: $${shippingCost.toFixed(2)}<br>
+                Tax: $${taxCost.toFixed(2)}<br>
+                <strong>Total: $${finalTotal.toFixed(2)}</strong>
+            </div>
+        `;
+
+        orderSummaryContainer.innerHTML = `
+            <h3>Order Summary</h3>
+            ${cartItemsHTML}
+            ${totalHTML}
+        `;
+    } else {
+        const orderSummaryContainer = document.querySelector(".order-summary");
+        orderSummaryContainer.innerHTML = `
+            <h3>Order Summary</h3>
+            <p>Your cart is empty. Please add items to your cart before proceeding to checkout.</p>
+        `;
+    }
+
+    // Event listener for the Close button in the modal
+    document.getElementById("close-modal").addEventListener("click", () => {
+        const orderModal = document.getElementById("order-confirmation-modal");
+        if (orderModal) {
+            orderModal.classList.add("hidden"); // Hide the modal
+        }
+
+        // Clear cart and redirect to homepage
+        localStorage.removeItem("cart");
+        window.location.href = "index.html";
+    });
+});
+
+// --------------Notifications
 
 //For the customized alerts
 function showNotification(message, type = "info") {
@@ -339,28 +414,3 @@ function showNotification(message, type = "info") {
         notification.remove();
     });
 }
-document.querySelector(".checkout-form button[type='submit']").addEventListener("click", (e) => {
-    e.preventDefault();
-    const name = document.getElementById("name").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const address = document.getElementById("address").value.trim();
-    const payment = document.getElementById("payment").value;
-    const orderModal = document.getElementById("order-confirmation-modal");
-    if (orderModal) {
-        orderModal.classList.remove("hidden");
-
-        //Clear cart
-        cart = [];
-        localStorage.setItem("cart", JSON.stringify(cart));
-        renderCart(); //Update the cart
-    }
-});
-
-//Event listener to the Close the order confirmation
-document.getElementById("close-modal").addEventListener("click", () => {
-    const orderModal = document.getElementById("order-confirmation-modal");
-    if (orderModal) {
-        orderModal.classList.add("hidden");
-        window.location.href = "index.html";
-    }
-});
