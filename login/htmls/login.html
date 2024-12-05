@@ -13,6 +13,13 @@
 
     <!-- Login Form -->
     <form id="loginForm">
+        <div class="form-group">
+            <label for="user-type">User Type</label>
+            <select id="user-type" name="user-type" required>
+                <option value="admin">Admin</option>
+                <option value="customer">Customer</option>
+            </select>
+        </div>
         <div class="input-group">
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" required>
@@ -61,7 +68,6 @@
                     // Handle successful login (e.g., redirect the user)
                     alert('Login successful!');
                     localStorage.setItem('username', username);
-                    console.log(" adrian " + username);
                     window.location.href = "homePage.html"; // Example redirect to dashboard
                 } else {
                     return response.text().then(errorMessage => {

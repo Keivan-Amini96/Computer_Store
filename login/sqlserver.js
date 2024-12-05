@@ -38,22 +38,6 @@ app.post('/login', (req, res) => {
         if(password === user.pd) {
             const token = jwt.sign({ id: user.id, username: user.username }, 'secret_key', { expiresIn: '1h' });
             const jsonData = JSON.stringify("", null, 2);
-
-            // const jsonFilePath = path.join(__dirname, './json/user.json');
-            // const data = JSON.stringify({
-            //     name: username
-            // }, null, 2);
-            //
-            // // Write the JSON data to a file in the public directory
-            // fs.writeFile(jsonFilePath, data, (err) => {
-            //     if (err) {
-            //         res.status(500).send('Error writing to JSON file');
-            //         return;
-            //     }
-            //
-            //     res.status(200).send('JSON file written successfully!');
-            // });
-
             res.json({ message: 'Login successful', token });
         } else {
             return res.status(401).json({ message: 'Invalid username or password' });
@@ -94,13 +78,21 @@ app.get('/api/accessories', (req, res) => {
 });
 
 app.get('/api/productlist', (req, res) => {
-    const sql = "select price, name, product_id as id, category, brand, image_data from products;";
+    const sql = "select price, name, product_id as id, category, brand, image_data, availability, description from products";
     db.query(sql, (err, results) => {
         if (err) {
             console.error('Error fetching accessories:', err.stack);
             return res.status(500).send('Internal Server Error');
         }
         res.json(results);
+    });
+});
+
+app.post('/signup', (req, res) => {
+    const { username, password} = req.body;
+    db.execute('INSERT INTO users (un, pd, is_admin) VALUES (?, ?, ?);', [username, password, 0], (err, results) => {
+        if (err) return res.status(500).json({ message: 'Database error' });
+        res.json({ message: 'Signup successful'});
     });
 });
 

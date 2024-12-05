@@ -8,7 +8,7 @@ const searchBar = document.querySelector(".search-bar input");
 const searchButton = document.querySelector(".search-bar button");
 const categoryGrid = document.querySelector(".category-grid");
 const mainContent = document.querySelector("main");
-const sqlurl = "http://ec2-100-26-101-174.compute-1.amazonaws.com:5000";
+const sqlurl = "http://ec2-3-92-211-103.compute-1.amazonaws.com:5000";
 
 // set login
 window.onload = function (){
@@ -21,6 +21,9 @@ window.onload = function (){
         });
     }
 };
+
+// search adrian
+
 
 //Toggle the cart sidebar
 cartToggle?.addEventListener("click", () => {
@@ -142,6 +145,8 @@ function renderCart() {
     // Save the updated cart in localStorage
     localStorage.setItem("cart", JSON.stringify(cart));
 }
+
+
 
 //Add to cart
 function addToCart(productId) {
@@ -299,8 +304,11 @@ function viewDetails(productId) {
 //Fetch and render product details
 function fetchProductDetails() {
     const productId = getProductIdFromUrl();
-    const product = products.find((p) => p.id === parseInt(productId));
-
+    const product = products.find((p) => {
+        var p1 = Number(p.id);
+        var p2 = Number(productId);
+        return p1 === p2;
+    });
     if (product) {
         renderProductDetails(product);
     } else {
@@ -315,7 +323,7 @@ function getProductIdFromUrl() {
 
 //Render product details
 function renderProductDetails(product) {
-    document.querySelector('#main-image').src = product.gallery[0];
+    document.querySelector('#main-image').src = product.image_data;
     document.querySelector('.product-info h1').textContent = product.name;
     document.querySelector('.product-info .price').textContent = `$${product.price}`;
     document.querySelector('.product-info .availability span').textContent = product.availability;
@@ -339,6 +347,9 @@ function renderProductDetails(product) {
         addToCartButton.onclick = () => addToCart(product.id);
     }
 }
+
+
+
 
 // ------------------Notifications
 
@@ -370,6 +381,48 @@ function showNotification(message, type = "info") {
         notification.remove();
     });
 }
+
+//adrian search
+document.getElementById('searchForm').addEventListener('submit', function (event) {
+    event.preventDefault(); // Prevent the form from submitting normally
+    const type = document.getElementById('searchinput').value;
+    if (type === 'monitor' || type === 'laptop' || type === 'desktop' || type === 'accessories') {
+        window.location.href = "/htmls/productList.html?category=" + type;
+    } else {
+
+    }
+
+});
+
+document.getElementById('searchformlist').addEventListener('submit', function (event) {
+    event.preventDefault(); // Prevent the form from submitting normally
+    console.log("adrian 1111" );
+    const type = document.getElementById('searchinputlist').value;
+    if (type === 'monitor' || type === 'laptop' || type === 'desktop' || type === 'accessories') {
+        window.location.href = "/htmls/productList.html?category=" + type;
+    } else {
+
+    }
+
+});
+
+document.getElementById('searchformdetail').addEventListener('submit', function (event) {
+    event.preventDefault(); // Prevent the form from submitting normally
+    const type = document.getElementById('searchinputdetail').value;
+    if (type === 'monitor' || type === 'laptop' || type === 'desktop' || type === 'accessories') {
+        window.location.href = "/htmls/productList.html?category=" + type;
+        //Filtering
+        const pro = products.filter(product => {
+            return product.category.toLowerCase() === type;
+        });
+    } else {
+
+    }
+
+});
+
+
+
 document.addEventListener("DOMContentLoaded", () => {
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
@@ -406,9 +459,7 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
     } else {
         const orderSummaryContainer = document.querySelector(".order-summary");
-        orderSummaryContainer.innerHTML = `
-            <h3>Order Summary</h3>
-            <p>Your cart is empty. Please add items to your cart before proceeding to checkout.</p>
+        orderSummaryContainer.innerHTML = `<h3>Order Summary</h3> <p>Your cart is empty. Please add items to your cart before proceeding to checkout.</p>
         `;
     }
 

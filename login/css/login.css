@@ -52,3 +52,6 @@ button:hover {
     color: red;
     text-align: center;
 }
+.form-group {
+    margin-bottom: 15px;
+}
