@@ -373,55 +373,83 @@ function showNotification(message, type = "info") {
 }
 document.addEventListener("DOMContentLoaded", () => {
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const placeOrderBtn = document.querySelector(".checkout-form button[type='submit']");
+    const modal = document.getElementById("order-confirmation-modal");
+    const closeModalBtn = document.getElementById("close-modal");
+    const orderSummary = document.querySelector(".order-summary");
 
-    if (cart.length > 0) {
-        const orderSummaryContainer = document.querySelector(".order-summary");
-        let subtotal = 0;
-
-        const cartItemsHTML = cart
-            .map((item) => {
-                subtotal += item.price * item.quantity;
-                return `
-                    <p>${item.name}<br>Price: $${item.price} x ${item.quantity}</p>
-                `;
-            })
-            .join("");
-
-        const shippingCost = subtotal > 0 ? 10 : 0;
-        const taxCost = subtotal * 0.13;
-        const finalTotal = subtotal + shippingCost + taxCost;
-
-        const totalHTML = `
-            <div class="total">
-                Subtotal: $${subtotal.toFixed(2)}<br>
-                Shipping: $${shippingCost.toFixed(2)}<br>
-                Tax: $${taxCost.toFixed(2)}<br>
-                <strong>Total: $${finalTotal.toFixed(2)}</strong>
-            </div>
-        `;
-
-        orderSummaryContainer.innerHTML = `
-            <h3>Order Summary</h3>
-            ${cartItemsHTML}
-            ${totalHTML}
-        `;
-    } else {
-        const orderSummaryContainer = document.querySelector(".order-summary");
-        orderSummaryContainer.innerHTML = `
-            <h3>Order Summary</h3>
-            <p>Your cart is empty. Please add items to your cart before proceeding to checkout.</p>
-        `;
-    }
-
-    // Event listener for the Close button in the modal
-    document.getElementById("close-modal").addEventListener("click", () => {
-        const orderModal = document.getElementById("order-confirmation-modal");
-        if (orderModal) {
-            orderModal.classList.add("hidden"); // Hide the modal
+    function displayCartItems() {
+        if (cart.length === 0) {
+            orderSummary.innerHTML = "<p>Your cart is empty.</p>";
+        } else {
+            let subtotal = 0;
+    
+            const itemList = cart
+                .map((item) => {
+                    subtotal += item.price * item.quantity;
+                    return `
+                        <div class="cart-item">
+                            <p>${item.name}</p>
+                            <p>Quantity: ${item.quantity}</p>
+                            <p>Price: $${item.price.toFixed(2)}</p>
+                        </div>
+                    `;
+                })
+                .join("");
+    
+            const { shippingCost, taxCost, finalTotal } = calculateCosts(subtotal);
+    
+            const totalSummary = `
+                <div class="total-summary">
+                    <p>Subtotal: $${subtotal.toFixed(2)}</p>
+                    <p>Shipping: $${shippingCost.toFixed(2)}</p>
+                    <p>Tax: $${taxCost.toFixed(2)}</p>
+                    <strong>Total: $${finalTotal.toFixed(2)}</strong>
+                </div>
+            `;
+    
+            orderSummary.innerHTML = itemList + totalSummary;
         }
+    }
+    
 
-        // Clear cart and redirect to homepage
-        localStorage.removeItem("cart");
-        window.location.href = "/htmls/homePage.html";
+    displayCartItems();
+
+    placeOrderBtn.addEventListener("click", async (e) => {
+        e.preventDefault();
+    
+        if (cart.length === 0) {
+            showNotification("Your cart is empty! Add items to the cart before placing an order.");
+            return;
+        }
+    
+        const userEmail = document.getElementById("email").value;
+        const orderDetails = {
+            email: userEmail,
+            items: cart,
+            total: cart.reduce((sum, item) => sum + item.price * item.quantity, 0),
+        };
+    
+        try {
+            const response = await fetch("http://ec2-3-86-24-216.compute-1.amazonaws.com:5000/api/send-order-email", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(orderDetails),
+            });
+    
+            if (response.ok) {
+                showNotification("Order placed successfully! A confirmation email has been sent.");
+                modal.classList.remove("hidden");
+                localStorage.removeItem("cart");
+            } else {
+                showNotification("Failed to send confirmation email. Please try again.");
+            }
+        } catch (error) {
+            console.error("Error placing order:", error);
+            showNotification("An error occurred while placing your order. Please try again.");
+        }
     });
+    
 });

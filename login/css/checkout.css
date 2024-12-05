@@ -207,4 +207,88 @@ footer {
     text-align: center;
     padding: 20px;
     margin-top: auto;
+}/* Alert message container */
+.alert-message {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 15px 25px;
+    border-radius: 5px;
+    background-color: #ffcccb; /* Light red for warning */
+    color: #721c24; /* Dark red text for error */
+    font-weight: bold;
+    font-size: 16px;
+    text-align: center;
+    z-index: 1000;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Alert fade out */
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+.alert-message.fade-out {
+    animation: fadeOut 2s forwards;
+}
+
+#notification-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.notification {
+    background-color: #12343b;
+    color: #f0ebe1;
+    padding: 15px 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    animation: fade-in 0.5s ease, fade-out 0.5s ease 3s;
+    font-size: 1rem;
+    font-weight: bold;
+}
+.notification .close-btn {
+    background: none;
+    border: none;
+    color: #d4a373;
+    font-size: 1.2rem;
+    font-weight: bold;
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    cursor: pointer;
+}
+.notification .close-btn:hover {
+    color: #a47551;
+}
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fade-out {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
 }
