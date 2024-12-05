@@ -2,19 +2,14 @@ const express = require('express');
 const mysql = require('mysql2');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
+const fs = require('fs');
+const path = require('path');
 
 const app = express();
 const port = 5000;
 
-const corsOptions = {
-    origin: 'http://ec2-3-83-116-22.compute-1.amazonaws.com/:5000/login',  // your React app's URL (replace if different)
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'], // Add any custom headers you're sending
-    credentials: true,  // Allow cookies (if you're sending them)
-};
-
 app.use(express.json());
-app.use(cors(corsOptions));
+app.use(cors());
 
 const db = mysql.createConnection({
     host: 'database-1.ciwlsxmyu0ev.us-east-1.rds.amazonaws.com',
@@ -42,6 +37,23 @@ app.post('/login', (req, res) => {
         const user = results[0];
         if(password === user.pd) {
             const token = jwt.sign({ id: user.id, username: user.username }, 'secret_key', { expiresIn: '1h' });
+            const jsonData = JSON.stringify("", null, 2);
+
+            // const jsonFilePath = path.join(__dirname, './json/user.json');
+            // const data = JSON.stringify({
+            //     name: username
+            // }, null, 2);
+            //
+            // // Write the JSON data to a file in the public directory
+            // fs.writeFile(jsonFilePath, data, (err) => {
+            //     if (err) {
+            //         res.status(500).send('Error writing to JSON file');
+            //         return;
+            //     }
+            //
+            //     res.status(200).send('JSON file written successfully!');
+            // });
+
             res.json({ message: 'Login successful', token });
         } else {
             return res.status(401).json({ message: 'Invalid username or password' });
@@ -72,6 +84,17 @@ app.get('/api/monitors', (req, res) => {
 
 app.get('/api/accessories', (req, res) => {
     const sql = 'SELECT product_id, name, description, price, category, brand, image_data  FROM monitors';
+    db.query(sql, (err, results) => {
+        if (err) {
+            console.error('Error fetching accessories:', err.stack);
+            return res.status(500).send('Internal Server Error');
+        }
+        res.json(results);
+    });
+});
+
+app.get('/api/productlist', (req, res) => {
+    const sql = "select price, name, product_id, category, brand from pc union select price, name, product_id, category, brand from monitors union select price, name, product_id, category, brand from accessories";
     db.query(sql, (err, results) => {
         if (err) {
             console.error('Error fetching accessories:', err.stack);

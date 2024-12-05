@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="../css/login.css">
+</head>
+<body>
+
+<div class="login-container">
+    <h2>Login</h2>
+
+    <!-- Login Form -->
+    <form id="loginForm">
+        <div class="input-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+
+        <div class="input-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+
+        <button type="submit" class="btn">Login</button>
+    </form>
+    <p class="signup-link">Don't have an account? <a href="signup.html">Sign up</a></p>
+</div>
+
+<script>
+    // app.js content moved to the HTML file
+
+    // Handle form submission
+    document.getElementById('loginForm').addEventListener('submit', function (event) {
+        event.preventDefault(); // Prevent the form from submitting normally
+
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        // Simple validation (check if fields are not empty)
+        if (username === "" || password === "") {
+            alert("Please fill in both fields.");
+            return;
+        }
+
+        // Send the login credentials to the backend using fetch
+        fetch('http://ec2-3-86-24-216.compute-1.amazonaws.com:5000/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username: username,
+                password: password,
+                is_admin: 0,
+            })
+        })
+            .then(response => {
+                if (response.ok) {
+                    // Handle successful login (e.g., redirect the user)
+                    alert('Login successful!');
+                    localStorage.setItem('username', username);
+                    console.log(" adrian " + username);
+                    window.location.href = "homePage.html"; // Example redirect to dashboard
+                } else {
+                    return response.text().then(errorMessage => {
+                        // Handle login failure (invalid credentials, etc.)
+                        alert(errorMessage);
+                    });
+                }
+            })
+            .catch(error => {
+                // Handle network or server errors
+                alert("Error: " + error.message);
+            });
+    });
+</script>
+</body>
+</html>
