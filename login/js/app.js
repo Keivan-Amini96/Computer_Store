@@ -8,20 +8,19 @@ const searchBar = document.querySelector(".search-bar input");
 const searchButton = document.querySelector(".search-bar button");
 const categoryGrid = document.querySelector(".category-grid");
 const mainContent = document.querySelector("main");
-const sqlurl = "http://ec2-54-89-216-58.compute-1.amazonaws.com:5000";
+const sqlurl = "http://ec2-100-26-101-174.compute-1.amazonaws.com:5000";
 
 // set login
 window.onload = function (){
     const globalValue = localStorage.getItem('username');
 
     if (globalValue) {
-        document.getElementById('homepagelogin').textContent = globalValue;
-    } else {
-        console.log(" adrian111 " + globalValue);
-        document.getElementById('homepagelogin').textContent = 'Login';
+        const elements = document.querySelectorAll('.login');
+        elements.forEach(element => {
+            element.textContent = globalValue;
+        });
     }
 };
-
 
 //Toggle the cart sidebar
 cartToggle?.addEventListener("click", () => {
