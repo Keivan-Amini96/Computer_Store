@@ -236,7 +236,8 @@ function getUrlParameter(param) {
 function filterProducts() {
     const selectedCategory = document.getElementById("categories").value.toLowerCase();
     const selectedBrand = document.getElementById("brands").value.toLowerCase();
-    const priceRange = parseInt(document.getElementById("price-range").value, 10); //Parse price as integer
+    const priceRangeSlider = document.getElementById("price-range");
+    const priceRange = parseInt(priceRangeSlider.value || priceRangeSlider.max, 10); //Parse price as integer
 
     //Filtering
     const filteredProducts = products.filter(product => {
@@ -263,11 +264,17 @@ if (brandDropdown) {
 }
 const priceRangeSlider = document.getElementById("price-range");
 if (priceRangeSlider) {
+    document.addEventListener("DOMContentLoaded", () => {
+        priceRangeSlider.value = priceRangeSlider.max; // Set slider to maximum value on load
+        document.getElementById("price-range-value").textContent = `$0 - $${priceRangeSlider.max}`; // Update the displayed range
+    });
+
     priceRangeSlider.addEventListener("input", () => {
         document.getElementById("price-range-value").textContent = `$0 - $${priceRangeSlider.value}`;
         filterProducts();
     });
 }
+
 function sortProducts() {
     const sortOption = document.getElementById('sort').value;
 

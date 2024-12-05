@@ -321,7 +321,7 @@ button.remove-item:hover {
 }
 
 .category img {
-    width: 220px;
+    width: 100%;
     height: 150px;
     object-fit: cover;
     margin-bottom: 10px;
