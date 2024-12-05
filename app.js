@@ -414,3 +414,44 @@ function showNotification(message, type = "info") {
         notification.remove();
     });
 }
+document.addEventListener("DOMContentLoaded", () => {
+    const placeOrderBtn = document.querySelector(".checkout-form button[type='submit']");
+    const modal = document.getElementById("order-confirmation-modal");
+    const closeModalBtn = document.getElementById("close-modal");
+    const orderSummary = document.querySelector(".order-summary");
+
+    function displayCartItems() {
+        if (cart.length === 0) {
+            orderSummary.innerHTML = "<p>Your cart is empty.</p>";
+        } else {
+            const itemList = cart
+                .map(
+                    (item) => `
+                <div class="cart-item">
+                    <p>${item.name}</p>
+                    <p>Quantity: ${item.quantity}</p>
+                    <p>Price: $${item.price}</p>
+                </div>
+            `
+                )
+                .join("");
+            orderSummary.innerHTML = itemList;
+        }
+    }
+
+    displayCartItems();
+
+    placeOrderBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        if (cart.length === 0) {
+            alert("Your cart is empty! Add items to the cart before placing an order.");
+            return;
+        }
+        modal.classList.remove("hidden");
+        localStorage.removeItem("cart");
+    });
+
+    closeModalBtn.addEventListener("click", () => {
+        window.location.href = "homePage.html";
+    });
+});
