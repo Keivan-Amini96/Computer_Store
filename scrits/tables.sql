@@ -49,3 +49,21 @@ CREATE TABLE `cart` (
                          `un` varchar(255) DEFAULT NULL,
                          ``
 );
+
+
+CREATE TABLE products (
+                          product_id INT AUTO_INCREMENT PRIMARY KEY,
+                          name VARCHAR(255) NOT NULL,
+                          description TEXT,
+                          price DECIMAL(10,2),
+                          category VARCHAR(50),
+                          brand VARCHAR(50),
+                          ram VARCHAR(50),
+                          ssd VARCHAR(50),
+                          graphics VARCHAR(150),
+                          processor VARCHAR(150),
+                          size VARCHAR(50),
+                          resolution VARCHAR(50),
+                          refresh_rate VARCHAR(50),
+                          image_data LONGBLOB
+);

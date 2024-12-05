@@ -94,7 +94,7 @@ app.get('/api/accessories', (req, res) => {
 });
 
 app.get('/api/productlist', (req, res) => {
-    const sql = "select price, name, product_id, category, brand from pc union select price, name, product_id, category, brand from monitors union select price, name, product_id, category, brand from accessories";
+    const sql = "select price, name, product_id as id, category, brand, image_data from products;";
     db.query(sql, (err, results) => {
         if (err) {
             console.error('Error fetching accessories:', err.stack);

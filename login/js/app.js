@@ -8,7 +8,7 @@ const searchBar = document.querySelector(".search-bar input");
 const searchButton = document.querySelector(".search-bar button");
 const categoryGrid = document.querySelector(".category-grid");
 const mainContent = document.querySelector("main");
-const sqlurl = "http://ec2-3-86-24-216.compute-1.amazonaws.com:5000";
+const sqlurl = "http://ec2-54-89-216-58.compute-1.amazonaws.com:5000";
 
 // set login
 window.onload = function (){
@@ -218,7 +218,7 @@ function renderProducts(productsToRender) {
         productCard.className = 'product-card';
 
         productCard.innerHTML = `
-            <img src="${product.image}" alt="${product.name}">
+            <img src=${product.image_data} alt="${product.name}">
             <h3>${product.name}</h3>
             <p>$${product.price}</p>
             <button onclick="addToCart(${product.id})">Add to Cart</button>
