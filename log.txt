@@ -1,0 +1,99 @@
+commit 20dcebb642846a7f79bcd1cc9573435ad846101b
+Merge: 633a103 e0ee79f
+Author: nan wu <uwo93@uwo.ca>
+Date:   Mon Dec 2 22:48:02 2024 -0500
+
+    Merge branch 'nan'
+
+commit e0ee79f423fa280d87070314f8100902824c3ec8
+Author: nan wu <uwo93@uwo.ca>
+Date:   Mon Dec 2 22:47:35 2024 -0500
+
+    react
+
+commit 633a10390867d72ca86042d88f0d9a2a3e2481c3
+Author: Keivan-Amini96 <kamini4@uwo.ca>
+Date:   Mon Dec 2 19:23:11 2024 -0500
+
+    added link from homePage to ProductPage
+
+commit 6ac4a95b90ef51e83e2931ffadb236de91a0574e
+Author: Keivan-Amini96 <kamini4@uwo.ca>
+Date:   Mon Dec 2 19:15:38 2024 -0500
+
+    resolved conflicts
+
+commit 2fa10a49dd61214e3f5c97bbe9e0465298d3f1ae
+Merge: 3efed88 61ddfda
+Author: Keivan-Amini96 <kamini4@uwo.ca>
+Date:   Mon Dec 2 19:14:30 2024 -0500
+
+    Merge branch 'main' of https://github.com/Keivan-Amini96/Computer_Store
+
+commit 3efed8874f9e597fb68e587fa9cd97ceba413a0b
+Author: Keivan-Amini96 <kamini4@uwo.ca>
+Date:   Mon Dec 2 19:02:48 2024 -0500
+
+    add functions for product list and product detail
+
+commit 61ddfda63b0d134b0276cd2a7af4aba81db341cb
+Author: Coding-Ali <ssamieik@uwo.ca>
+Date:   Mon Dec 2 18:53:25 2024 -0500
+
+    Added the cart design for the pages!
+    and the images for the test!
+
+commit fd3aa4a5f4120bbdd1c372b3f908f443c4f1c811
+Merge: 356016d 802a6b4
+Author: Keivan-Amini96 <kamini4@uwo.ca>
+Date:   Mon Dec 2 17:24:23 2024 -0500
+
+    Merge branch 'main' of https://github.com/Keivan-Amini96/Computer_Store
+
+commit 356016d94778a0ce2114916086b8b342122ed897
+Author: Keivan-Amini96 <kamini4@uwo.ca>
+Date:   Mon Dec 2 17:23:34 2024 -0500
+
+    Added product details page html and css, also added some temporary json file and image file for testing
+
+commit 802a6b4ff983c7d344444b582e0aaac78fab9d28
+Author: Coding-Ali <ssamieik@uwo.ca>
+Date:   Mon Dec 2 17:18:01 2024 -0500
+
+    checkout page Html and CSS!
+
+commit 6ef1a9d6088779fc9e43477fe15dc1fe1b993dae
+Author: nan wu <uwo93@uwo.ca>
+Date:   Sun Dec 1 19:19:23 2024 -0500
+
+    login
+
+commit d7953febec530de3e7ed300ada723023e7628f45
+Author: nan wu <uwo93@uwo.ca>
+Date:   Sun Dec 1 18:08:36 2024 -0500
+
+    scripts
+
+commit 4b46be847ddb22d54ae730bddf9bc2a710747a3f
+Author: nan wu <uwo93@uwo.ca>
+Date:   Sat Nov 30 22:21:34 2024 -0500
+
+    login
+
+commit 24e6a26c29bec2ed23691d57635a2ca3e01bcd66
+Author: Keivan-Amini96 <kamini4@uwo.ca>
+Date:   Fri Nov 29 20:51:14 2024 -0500
+
+    ProductListing Page, Html and Styling Done!
+
+commit 24e9124c6d198a8be7456bc81d750ab2fb62f8d1
+Author: Keivan-Amini96 <kamini4@uwo.ca>
+Date:   Fri Nov 29 20:24:39 2024 -0500
+
+    homePage Html and Styling added
+
+commit daaf72dc321302dfa81dd063797e582098686cb9
+Author: Keivan-Amini96 <kamini4@uwo.ca>
+Date:   Fri Nov 29 19:50:05 2024 -0500
+
+    Initial commit
