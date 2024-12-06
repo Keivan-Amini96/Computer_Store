@@ -1,0 +1,54 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.login-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+.roleSelection {
+    margin-bottom: 20px;
+    display: flex; /* Align radio buttons horizontally */
+    justify-content: space-evenly; /* Distribute items evenly */
+    align-items: center; /* Vertically center the items */
+}
+
+/* Label for each role radio button */
+.roleLabel {
+    display: flex;
+    align-items: center;
+}
+
+h2 {
+    text-align: center;
+}
+input {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: cornflowerblue;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+button:hover {
+    background-color: dodgerblue;
+}
+.error {
+    color: red;
+    text-align: center;
+}
