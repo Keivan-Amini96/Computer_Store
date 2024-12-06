@@ -335,23 +335,34 @@ function getProductIdFromUrl() {
 function renderProductDetails(product) {
     document.querySelector('#main-image').src = product.image_data;
     document.querySelector('.product-info h1').textContent = product.name;
-    document.querySelector('.product-info .price').textContent = `$${product.price}`;
+    document.querySelector('.product-info .price').textContent = "$"+product.price;
     document.querySelector('.product-info .availability span').textContent = product.availability;
     document.querySelector('.product-info .description').textContent = product.description;
+    // Clear previous details and add category-specific details
+    const detailsContainer = document.getElementById('product_detail');
+    var additionalDetails = '';
+    if (product.category === 'laptop' || product.category === 'desktop') {
+        additionalDetails = `
+            <p class="description"><strong>SSD:</strong> ${product.ssd}</p>
+            <p class="description"><strong>Graphics:</strong> ${product.graphics}</p>
+            <p class="description"><strong>Processor:</strong> ${product.processor}</p>
+        `;
+    } else if (product.category === 'monitor') {
+        additionalDetails = `
+            <p class="description"><strong>Size:</strong> ${product.size}</p>
+            <p class="description"><strong>Resolution:</strong> ${product.resolution}</p>
+            <p class="description"><strong>Refresh Rate:</strong> ${product.refresh_rate}</p>
+        `;
+    } else if (product.category === 'accessories') {
+        additionalDetails = `
+            <p class="description"><strong>Type:</strong> ${product.category}</p>
+            <p class="description"><strong>Brand:</strong> ${product.brand}</p>
+        `;
+    }
 
-    const thumbnailsContainer = document.querySelector('.gallery-thumbnails');
-    thumbnailsContainer.innerHTML = '';
-
-    product.gallery.forEach((image) => {
-        const thumbnail = document.createElement('img');
-        thumbnail.src = image;
-        thumbnail.alt = product.name;
-        thumbnail.onclick = () => {
-            document.querySelector('#main-image').src = image;
-        };
-        thumbnailsContainer.appendChild(thumbnail);
-    });
-
+    // Append the additional details to the details container
+    detailsContainer.innerHTML = additionalDetails;
+    // Add to Cart logic
     const addToCartButton = document.querySelector('.add-to-cart');
     if (addToCartButton) {
         addToCartButton.onclick = () => addToCart(product.id);
@@ -359,6 +370,114 @@ function renderProductDetails(product) {
 }
 
 
+
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    if (cart.length > 0) {
+        const orderSummaryContainer = document.querySelector(".order-summary");
+        let subtotal = 0;
+
+        const cartItemsHTML = cart
+            .map((item) => {
+                subtotal += item.price * item.quantity;
+                return `
+                    <p>${item.name}<br>Price: $${item.price} x ${item.quantity}</p>
+                `;
+            })
+            .join("");
+
+        const shippingCost = subtotal > 0 ? 10 : 0;
+        const taxCost = subtotal * 0.13;
+        const finalTotal = subtotal + shippingCost + taxCost;
+
+        const totalHTML = `
+            <div class="total">
+                Subtotal: $${subtotal.toFixed(2)}<br>
+                Shipping: $${shippingCost.toFixed(2)}<br>
+                Tax: $${taxCost.toFixed(2)}<br>
+                <strong>Total: $${finalTotal.toFixed(2)}</strong>
+            </div>
+        `;
+
+        orderSummaryContainer.innerHTML = `
+            <h3>Order Summary</h3>
+            ${cartItemsHTML}
+            ${totalHTML}
+        `;
+    } else {
+        const orderSummaryContainer = document.querySelector(".order-summary");
+        orderSummaryContainer.innerHTML = `
+            <h3>Order Summary</h3>
+            <p>Your cart is empty. Please add items to your cart before proceeding to checkout.</p>
+        `;
+    }
+
+    // Event listener for the Close button in the modal
+    document.getElementById("close-modal").addEventListener("click", () => {
+        const orderModal = document.getElementById("order-confirmation-modal");
+        if (orderModal) {
+            orderModal.classList.add("hidden"); // Hide the modal
+        }
+
+        // Clear cart and redirect to homepage
+        localStorage.removeItem("cart");
+        window.location.href = "homePage.html";
+        window.location.href = "/htmls/homePage.html";
+    });
+});
+//Event listener to the Close the order confirmation
+document.getElementById("close-modal").addEventListener("click", () => {
+    const orderModal = document.getElementById("order-confirmation-modal");
+    if (orderModal) {
+        orderModal.classList.add("hidden");
+        window.location.href = "homePage.html";
+    }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    // Event listener for the "Place Order" button
+    const placeOrderButton = document.getElementById("place-order");
+
+    if (placeOrderButton) {
+        placeOrderButton.addEventListener("click", (event) => {
+            event.preventDefault(); // Prevent form submission or page reload
+
+            const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+            // Check if cart is empty
+            if (cart.length === 0) {
+                alert("Your cart is empty. Please add items before placing an order.");
+                return;
+            }
+
+            // Retrieve billing details
+            const name = document.getElementById("name").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const address = document.getElementById("address").value.trim();
+            const paymentMethod = document.getElementById("payment").value;
+
+            // Check if all fields are filled
+            if (!name || !email || !address) {
+                alert("Please fill in all the billing details.");
+                return;
+            }
+
+            // Simulate order placement
+            alert(`Thank you, ${name}! Your order has been placed successfully.`);
+
+            // Clear the cart
+            localStorage.removeItem("cart");
+
+            // Redirect to homepage or confirmation page
+            window.location.href = "homePage.html";
+        });
+    } else {
+        console.error("Place Order button not found.");
+    }
+});
 
 
 // ------------------Notifications
@@ -432,56 +551,3 @@ document.getElementById('searchformdetail').addEventListener('submit', function 
 });
 
 
-
-document.addEventListener("DOMContentLoaded", () => {
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-    if (cart.length > 0) {
-        const orderSummaryContainer = document.querySelector(".order-summary");
-        let subtotal = 0;
-
-        const cartItemsHTML = cart
-            .map((item) => {
-                subtotal += item.price * item.quantity;
-                return `
-                    <p>${item.name}<br>Price: $${item.price} x ${item.quantity}</p>
-                `;
-            })
-            .join("");
-
-        const shippingCost = subtotal > 0 ? 10 : 0;
-        const taxCost = subtotal * 0.13;
-        const finalTotal = subtotal + shippingCost + taxCost;
-
-        const totalHTML = `
-            <div class="total">
-                Subtotal: $${subtotal.toFixed(2)}<br>
-                Shipping: $${shippingCost.toFixed(2)}<br>
-                Tax: $${taxCost.toFixed(2)}<br>
-                <strong>Total: $${finalTotal.toFixed(2)}</strong>
-            </div>
-        `;
-
-        orderSummaryContainer.innerHTML = `
-            <h3>Order Summary</h3>
-            ${cartItemsHTML}
-            ${totalHTML}
-        `;
-    } else {
-        const orderSummaryContainer = document.querySelector(".order-summary");
-        orderSummaryContainer.innerHTML = `<h3>Order Summary</h3> <p>Your cart is empty. Please add items to your cart before proceeding to checkout.</p>
-        `;
-    }
-
-    // Event listener for the Close button in the modal
-    document.getElementById("close-modal").addEventListener("click", () => {
-        const orderModal = document.getElementById("order-confirmation-modal");
-        if (orderModal) {
-            orderModal.classList.add("hidden"); // Hide the modal
-        }
-
-        // Clear cart and redirect to homepage
-        localStorage.removeItem("cart");
-        window.location.href = "/htmls/homePage.html";
-    });
-});
