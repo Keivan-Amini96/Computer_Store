@@ -332,16 +332,43 @@ function renderProductDetails(product) {
     const thumbnailsContainer = document.querySelector('.gallery-thumbnails');
     thumbnailsContainer.innerHTML = '';
 
-    product.gallery.forEach((image) => {
-        const thumbnail = document.createElement('img');
-        thumbnail.src = image;
-        thumbnail.alt = product.name;
-        thumbnail.onclick = () => {
-            document.querySelector('#main-image').src = image;
-        };
-        thumbnailsContainer.appendChild(thumbnail);
-    });
+    const thumbnail = document.createElement('img');
+    thumbnail.src = product.gallery[0]; // Use the first image
+    thumbnail.alt = product.name;
+    thumbnail.onclick = () => {
+        document.querySelector('#main-image').src = product.gallery[0];
+    };
+    thumbnailsContainer.appendChild(thumbnail);
 
+    // Clear previous details and add category-specific details
+    const detailsContainer = document.querySelector('.product-details');
+    detailsContainer.innerHTML = '';
+
+    let additionalDetails = '';
+    if (product.category === 'laptop' || product.category === 'desktop') {
+        additionalDetails = `
+            <p><strong>RAM:</strong> ${product.ram}</p>
+            <p><strong>SSD:</strong> ${product.ssd}</p>
+            <p><strong>Graphics:</strong> ${product.graphics}</p>
+            <p><strong>Processor:</strong> ${product.processor}</p>
+        `;
+    } else if (product.category === 'monitor') {
+        additionalDetails = `
+            <p><strong>Size:</strong> ${product.size}</p>
+            <p><strong>Resolution:</strong> ${product.resolution}</p>
+            <p><strong>Refresh Rate:</strong> ${product.refresh_rate}</p>
+        `;
+    } else if (product.category === 'accessory') {
+        additionalDetails = `
+            <p><strong>Type:</strong> ${product.category}</p>
+            <p><strong>Brand:</strong> ${product.brand}</p>
+        `;
+    }
+
+    // Append the additional details to the details container
+    detailsContainer.innerHTML = additionalDetails;
+
+    // Add to Cart logic
     const addToCartButton = document.querySelector('.add-to-cart');
     if (addToCartButton) {
         addToCartButton.onclick = () => addToCart(product.id);
